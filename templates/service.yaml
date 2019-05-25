@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "wespeakcloud-app-helm-chart.fullname" . }}
+  labels:
+    app: {{ include "wespeakcloud-app-helm-chart.name" . }}
+    chart: {{ include "wespeakcloud-app-helm-chart.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "wespeakcloud-app-helm-chart.name" . }}
+    release: {{ .Release.Name }}
